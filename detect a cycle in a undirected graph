@@ -1,0 +1,36 @@
+// note  : so u have to maintain a parent element
+
+bool dfs(vector<int> g[], bool visited[] ,int s,  int parent){
+    visited[s] = true;
+    
+    for(int x: g[s]){
+        if(visited[x] == false){
+            if(dfs(g,visited,x,s) == true){
+                return true;
+            }
+        }
+        else{
+            if(x != parent){
+                return true;
+            }
+            
+        }
+        
+        
+    }
+    return false;
+    
+}
+
+bool isCyclic(vector<int> g[], int V)
+{
+   bool visited[V];
+   for(int i= 0 ;i<V;i++) visited[i] = false;
+   for(int i= 0;i<V;i++){
+       if(visited[i] == false){
+           if(dfs(g,visited,i, -1) == true) return true;
+       }
+   }
+   return false;
+   
+}
