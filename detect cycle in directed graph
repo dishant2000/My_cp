@@ -1,0 +1,33 @@
+// note : you have to mimic call stack remember .
+
+bool dfs(vector<int> g[], bool visited[],int s,bool gstk[]){
+    
+    visited[s] = true;
+    gstk[s] = true;
+    
+    for(int x : g[s]){
+        if(visited[x] == false){
+            if(dfs(g,visited,x,gstk) == true) return true;
+        }
+        else{
+            if(gstk[x] == true) return true;
+        }
+        
+        
+    }
+    gstk[s] = false;
+    return false;
+}
+bool isCyclic(int V, vector<int> adj[])
+{
+    bool visited[V];
+    bool gstk[V];
+    for(int i = 0;i<V;i++){ visited[i] = false;  gstk[i] = false;}
+    
+    for(int i = 0;i<V;i++){
+        if(visited[i] == false){
+            if(dfs(adj,visited,i,gstk) == true) return true;
+        }
+    }
+    return false;
+}
