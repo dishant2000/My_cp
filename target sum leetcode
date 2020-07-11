@@ -1,0 +1,63 @@
+class Solution {
+public:
+    
+    int solve(vector<int>& v, int n , int s ,vector<vector<int>>& dp){
+        
+        if(s == 0){
+            return 1;
+        }
+        if(n == 0){
+            return 0;
+        }
+        if(dp[n][s] != -1) return dp[n][s];
+        
+        if(v[n - 1] == 0){
+           return dp[n][s] = solve(v,n-1,s,dp);
+        }
+        else if(v[n-1] <= s)
+        return dp[n][s] = (solve(v,n-1 , s, dp )  + solve(v, n-1, s - v[n - 1],dp));
+        else
+        return dp[n][s] = solve(v,n-1,s,dp);
+       
+        
+    }
+    
+    int findTargetSumWays(vector<int>& nums, int S) {
+        int sum = 0;
+        int n = nums.size();
+        for(int i= 0 ;i<n;i ++ ){
+            sum += nums[i];
+        }
+         
+        if(S > sum ) return 0;
+        if(-S < -sum) return 0;
+        int asum;
+        if((sum + S)%2 == 0)
+            asum = (sum + S)/2;
+        else{
+            return 0;
+        }
+        
+        
+            int c= 0 ;
+            for(int i = 0 ; i < n ;i++){
+                if(nums[i] == 0 ){
+                    c += 1;
+                }
+            }
+            
+        
+        vector<vector<int>> dp(n + 1 , vector<int>(asum  +   1)) ;
+        for(int i = 0 ; i < n  +1;i++){
+            for(int j = 0 ; j < asum  + 1; j++ ){
+                dp[i][j] = -1;
+            }
+        }
+        int res = solve(nums ,n ,asum,dp);
+      //  cout<<dp[0][0]<<" "<<dp[2][3]<<endl;
+        return res*pow(2, c);
+             
+        
+        
+    }
+};
