@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+
+int dp[4][4001];
+
+int solve(int s, vi& v,int n,int count){
+    if(s == 0 ) {   return count;} 
+   if(s < 0 || n == 0){  return INT_MIN;}
+ 
+   if(dp[n][s] != -1 ) {
+       if(dp[n][s] == INT_MIN) 
+       return INT_MIN; 
+       else 
+       return dp[n][s] + count;
+       
+   }
+   dp[n][s] = max(solve(s - v[n -1],v,n,count + 1) , solve(s,v,n -1,count));
+   
+   if(dp[n][s] != INT_MIN)
+    dp[n][s] -=  count  ;
+   return dp[n][s] + count;
+    
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin>>n;
+        memset(dp,-1,sizeof(dp));
+        vi v;
+        unordered_set<int> st;
+        floop(i,0,3){
+            int te;
+            cin>>te;
+            
+            if(st.find(te) == st.end()){
+              v.push_back(te);
+              st.insert(te);
+                
+            }
+            
+        }
+        int res = solve(n,v,v.size(),0);
+        
+        cout<< res <<endl;
+
+    }
+
+}
