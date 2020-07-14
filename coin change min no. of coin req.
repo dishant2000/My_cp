@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int coinChange(vector<int>& v, int s) {
+        int dp[s + 1];
+    dp[0] = 0;
+    for(int i = 1 ;i<=s ; i++ ){
+        dp[i] = s + 1;
+    }
+    
+    for(int i = 1 ;i<= s; i ++ ){
+        for(int x: v){
+            if(x <= i)
+            dp[i] = min(dp[i],1+dp[i - x]);
+        }
+    }
+    if(dp[s] != s + 1)
+    return dp[s];
+    else
+    return -1;
+    }
+};
