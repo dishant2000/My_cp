@@ -1,0 +1,78 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
+#include<map>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<climits>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+int target;
+
+int solve(vi& v,int n,int s ){
+    if(s == 0){
+        return 0;
+    }
+    if(n == 0 ){
+        return target + 1;
+    }
+    if(v[n-1] <= s)
+    return min(1 + solve(v,n,s-v[n-1]), solve(v,n -1,s));
+    else{
+        return solve(v,n-1,s);
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin>>target>>n;
+        vi v(n);
+        floop(i,0,n) cin>>v[i];
+        vvi dp(n + 1, vi(target + 1,-1));
+        // floop(i,0,n + 1){
+        //     floop(j,0,target + 1){
+        //         cout<<dp[i][j]<<" "; 
+        //     }
+        //     cout<<endl;
+        // }    
+        int res = solve(v,n,target);
+        // floop(i,0,n + 1){
+        //     floop(j,0,target + 1){
+        //         cout<<dp[i][j]<<" "; 
+        //     }
+        //     cout<<endl;
+        // }
+        cout<<res<<endl;
+
+
+    }
+
+}
