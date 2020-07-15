@@ -1,0 +1,58 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
+#include<map>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<climits>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+int solve(string s1, string s2,int n1, int n2){
+    if(n1 == 0 || n2 == 0) return 0;
+    if(s1[n1 - 1] == s2[n2 - 1]){
+        return 1 + solve(s1,s2,n1 -1,n2 -1);
+    }
+    return  max(solve(s1,s2,n1 -1,n2),solve(s1,s2,n1,n2 -1));
+
+
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while (t--) {
+        memset(dp,-1,sizeof(dp));
+        int n1 , n2;
+        cin>>n1>>n2;
+        string s1,s2;
+        cin>>s1>>s2;
+        int res = solve(s1,s2,n1,n2);
+        cout<<res<<endl;
+    }
+
+}
