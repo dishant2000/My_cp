@@ -1,0 +1,102 @@
+connected component : (any two nodes have path between them and we can reach both )
+1 . strongly connected :=  directed graph
+2.  weakly connected := undirected 
+
+couting no of connected components
+#include<iostream>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
+#include<map>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<climits>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+
+struct Graph{
+    vector<int> *adj;
+
+    Graph(int v){
+        adj = new vector<int> [v];
+    }
+
+    void addEdge(int u,int v){
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    void display(int v){
+        for(int i = 0; i < v ; i++){
+            for(int x : adj[i]){
+                cout<<x<<" ";
+            }
+        }
+        cout<<endl;
+    }
+    void bfs(int s , bool visited[]){
+        queue<int> q;
+        q.push(s);
+        visited[s] = true;
+        while(!q.empty()){
+            int u = q.front();
+            q.pop();
+            for(int x : adj[u]){
+                if(visited[x] == false){
+                    q.push(x);
+                    visited[x] = true;
+                }
+            }
+        }
+    }
+    int countConnect(int v){
+        bool visited[v];
+        for(int i = 0 ; i < v; i++){
+            visited[i] = false;
+        }
+        int res  = 0;
+        for(int i = 0 ;i < v;i++){
+            if(visited[i] == false){
+                res++;
+                bfs(i,visited);
+            }
+        }
+        return res;
+    }
+
+};
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    struct Graph myg(8) ; 
+    myg.addEdge(0 , 4);
+    myg.addEdge(2 , 6);
+    myg.addEdge(4 , 1);
+    myg.addEdge(4 , 5);
+    myg.addEdge(5 , 3);
+    myg.addEdge(5 , 7);
+   // myg.display(5);
+    cout<<myg.countConnect(8)<<endl;
+
+}
