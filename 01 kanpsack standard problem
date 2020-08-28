@@ -1,0 +1,69 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
+#include<map>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<climits>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+int dp[1000][1000];
+int knapsack(vi& val, vi& wt , int W , int n , int res)
+{   floop(i, 0 , n+1){
+        floop(j , 0, W+1){
+            if(i == 0||j==0){
+                dp[i][j] = 0;
+            }
+        }
+    }
+    floop(i , 1, n+1){
+        floop(j , 1, W+1){
+            if(j >= wt[i- 1]){
+                dp[i][j] = max(val[i -1 ] + dp[i - 1][j - wt[i - 1]], dp[i - 1][j]);
+            }
+            else{
+                dp[i][j] = dp[i -1 ][j];
+            }
+        }
+    }
+    return dp[n][W];
+}
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        int W;
+        cin>>W;
+        vi val(n),wt(n);
+        floop(i, 0, n) cin>>val[i];
+        floop(i, 0, n) cin>>wt[i];
+        cout<<knapsack(val, wt , W, n, 0)<<endl;
+
+    }
+}
+
