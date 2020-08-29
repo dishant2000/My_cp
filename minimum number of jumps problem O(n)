@@ -1,0 +1,79 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
+#include<map>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<climits>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+//int dp[10001][10001];
+int solve(vi& v , int n ){
+    int i = 0;
+    int res =  1;    
+    while(i < n){
+        int t = i;
+        int maxi =  v[i] + i;
+        if(maxi >= n-1)return res;
+        for(int j = i + 1; j <= i + v[i] && j < n; j++ ){
+            if(v[j] + j > maxi){
+                t = j;
+                maxi = v[j] + j;
+                
+            }
+        }
+        
+        
+        if (t == i) return -1; 
+        else{
+            i = t;
+            if(i == n - 1){
+                break;
+            }
+            else if(maxi >= n-1 && i < n ){
+                res++;
+                break;
+            }
+            else res++;
+        }
+        
+        
+        
+    }
+    return res;
+}
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n ;
+        cin>>n;
+        vi v(n);
+        floop(i, 0 , n) cin>>v[i];
+        cout<<solve(v,n)<<endl;
+    }
+}
+
