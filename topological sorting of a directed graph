@@ -23,9 +23,9 @@ vector<int> topoSort(int V, vector<int> adj[]) {
         res.push_back(u);
         for(int x : adj[u]){
             indegree[x]--;
-			if(indegree[x]  == 0){
-				q.push(x);
-			}
+	    if(indegree[x]  == 0){
+		q.push(x);
+	    }
         }
         
     }
