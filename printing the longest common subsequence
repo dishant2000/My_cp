@@ -1,0 +1,81 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
+#include<map>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<climits>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+int dp[10001][10001];
+string solve(string s1, string s2){
+    int n1 = s1.size();
+    int n2 = s2.size();
+    floop(i ,1 , n1 + 1){
+        floop(j , 1 , n2 + 1){
+            if(s1[i - 1] == s2[j- 1]){
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            }
+            else{
+                dp[i][j] = max(dp[i][j - 1], dp[i - 1][j]);
+            }
+        }
+    }
+    floop(i ,1 , n1 + 1){
+        floop(j , 1 , n2 + 1){
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    string res;
+
+    int i =  n1;
+    int j = n2;
+    while(i >= 1 && j >= 1 ){
+        if(dp[i][j - 1]  ==  dp[i - 1][j]){
+            i = i - 1;
+            j = j- 1;
+            res.push_back(s1[i]);
+        }
+        else{
+            if(dp[i][j - 1] > dp[i - 1][j]){
+                j = j - 1;
+
+            }
+            else{
+                i = i - 1;
+            }
+        }
+    }
+    return res;
+}
+int main(){
+   string s1 ,s2;
+   cin>>s1>>s2;
+   string res = solve(s1, s2);
+   cout<<res<<endl;
+}
+
