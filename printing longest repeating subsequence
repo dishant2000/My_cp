@@ -1,0 +1,91 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
+#include<map>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<climits>
+using namespace std;
+
+#define floop(i,L,R) for (int i = L; i < R; i++)
+#define feloop(i,L,R) for (int i = L; i <= R; i++)
+#define ffloop(i,L,R) for (int i = L; i > R; i--)
+#define ffeloop(i,L,R) for (int i = L; i >= R; i--)
+#define forEach(i,t) for (auto i=t.begin(); i!=t.end(); i++)
+#define ALL(c) (c).begin(),(c).end()
+#define pb push_back
+#define dekh(d) cout<<d<<endl
+#define dekh2(d) cout<<d<<" "
+#define dekh3(d) cout<<d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+int dp[10001][10001];
+
+int solve(string s, int n){
+
+    floop(i ,  1, n + 1){
+        floop(j , 1, n + 1){
+            if(s[i - 1] == s[j - 1] && i != j){
+                dp[i][j] = 1 + dp[i - 1][j -1 ];
+            }
+            else{
+                dp[i][j] = max(dp[i][j - 1], dp[i- 1][j]);
+            }
+        }
+    }
+    return dp[n][n];
+    // floop(i ,  1, n + 1){
+    //     floop(j , 1, n + 1){
+    //         cout<<dp[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+    // string res;
+
+    // int i =  n;
+    // int j = n;
+    // while(i >= 1 && j >= 1 ){
+    //     if(s[i -1 ] == s[j - 1] && i != j){
+    //         res.push_back(s[i - 1]);
+    //         i = i - 1;
+    //         j = j- 1;
+            
+    //     }
+    //     else{
+    //         if(dp[i][j - 1] > dp[i - 1][j]){
+    //             j = j - 1;
+
+    //         }
+    //         else{
+    //             i = i - 1;
+    //         }
+    //     }
+    // }
+    // return res;
+}
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        string s;
+       cin>>s;
+       cout<<solve(s, s.size())<<endl;
+        
+    }
+   
+}
+
