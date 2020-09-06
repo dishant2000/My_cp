@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int findPivot(vector<int>& v, int n){
+        int low= 0 , high = n - 1;
+        while(low <= high){
+            int mid = (low + high)/2;
+
+            if(mid != 0 && v[mid - 1 ] > v[mid]) return mid;
+
+            if(v[mid] == v[high]){
+                high--;
+            }
+            else if(v[mid] > v[high]){
+                 low = mid + 1;
+            }
+            else{
+                high = mid - 1;
+            }
+        }
+        return low;   
+
+        
+    }
+    int search(vector<int>& nums, int target) {
+        int pivot = findPivot(nums, nums.size());
+        int n = nums.size();
+        int low = 0;
+        int high = n - 1;
+        
+        while(low <= high){
+            
+            
+            if(target == nums[pivot]) return pivot;
+            else if(target > nums[pivot] && target <= nums[high]){
+                low = pivot + 1;
+                pivot = (low + high)/2;
+            }
+            else{
+                high = pivot -1;
+                pivot = (low + high)/2;
+            }
+        }
+        return -1;
+        
+        
+    }
+};
