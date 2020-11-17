@@ -1,0 +1,35 @@
+bool dfs(vector<int> g[], int s , bool visited[], bool recst[]){
+    visited[s] = true;
+    recst[s] = true;
+    
+    for(int u: g[s])
+    {
+        if(recst[u] == true) return true;
+        if(visited[u] == false){
+            if(dfs(g,u,visited,recst) == true) return true;
+            
+            
+        }
+        
+    }
+    recst[s] = false;
+    return false;
+}
+bool isCyclic(int V, vector<int> adj[])
+{
+    // Your code here
+    bool  visited[V]; 
+    bool recst[V];
+    for(int i = 0 ; i < V; i++) {
+        visited[i] = false;
+        recst[i] = false;
+    }
+    for(int i = 0 ; i < V; i++){
+        if(visited[i] == 0){
+            if(dfs(adj, i , visited, recst) == true)
+            return true;
+        }
+    }
+    return false;
+    
+}
