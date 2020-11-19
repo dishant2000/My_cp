@@ -1,0 +1,102 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <cmath>
+#include <algorithm>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
+#include <map>
+#include <sstream>
+#include <stack>
+#include <queue>
+#include <climits>
+using namespace std;
+
+#define floop(i, L, R) for (int i = L; i < R; i++)
+#define feloop(i, L, R) for (int i = L; i <= R; i++)
+#define ffloop(i, L, R) for (int i = L; i > R; i--)
+#define ffeloop(i, L, R) for (int i = L; i >= R; i--)
+#define forEach(i, t) for (auto i = t.begin(); i != t.end(); i++)
+#define ALL(c) (c).begin(), (c).end()
+#define pb push_back
+#define dekh(d) cout << d << endl
+#define dekh2(d) cout << d << " "
+#define dekh3(d) cout << d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+
+void insud(vi g[], int v, int u){
+  g[v].emplace_back(u);
+  g[u].emplace_back(v);
+}
+
+void insd(vi g[],int v,int u){
+  g[v].emplace_back(u);
+}
+
+void tdfs(vi g[], stack<int>& st,int s,bool visited[]){
+  visited[s] = true;
+  for(int v : g[s]){
+
+    if(visited[v] == false){
+      cout<<v<<"----"<<endl;
+      tdfs(g,st,v,visited);
+    }
+  }
+  
+  st.push(s);
+}
+vi topodfs(vi g[],int V){
+  bool visited[V];
+  vi ans;
+  stack<int> st;
+  floop(i,0,V) visited[i] = false;
+  floop(i,0,V){
+    if(visited[i] == false){
+      cout<<i<<"##"<<endl;
+      tdfs(g,st,i,visited);
+    }
+  }
+
+  while(!st.empty()){
+    ans.emplace_back(st.top());
+    st.pop();
+  }
+  return ans;
+}
+
+
+int main()
+{
+    #ifndef ONLINE_JUDGE  
+        freopen("input.txt", "r", stdin); 
+        freopen("output.txt", "w", stdout); 
+    #endif 
+   
+    int V;
+    cin>>V;
+    vi g[V];
+    int enteries;
+    cin>>enteries;
+    while(enteries--){
+      int v,u;
+      cin>>v>>u;
+      insd(g,v,u);
+    }        
+
+    vi res = topodfs(g,V);
+    floop(i,0,res.size()){
+      cout<<res[i]<<" ";
+    }
+    cout<<endl;
+   return 0;
+
+
+}
+
