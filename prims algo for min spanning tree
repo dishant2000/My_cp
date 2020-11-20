@@ -1,0 +1,157 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <cmath>
+#include <algorithm>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
+#include <map>
+#include <sstream>
+#include <stack>
+#include <queue>
+#include <climits>
+using namespace std;
+
+#define floop(i, L, R) for (int i = L; i < R; i++)
+#define feloop(i, L, R) for (int i = L; i <= R; i++)
+#define ffloop(i, L, R) for (int i = L; i > R; i--)
+#define ffeloop(i, L, R) for (int i = L; i >= R; i--)
+#define forEach(i, t) for (auto i = t.begin(); i != t.end(); i++)
+#define ALL(c) (c).begin(), (c).end()
+#define pb push_back
+#define dekh(d) cout << d << endl
+#define dekh2(d) cout << d << " "
+#define dekh3(d) cout << d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+
+// void insud(vi g[], int v, int u){
+//   g[v].emplace_back(u);
+//   g[u].emplace_back(v);
+// }
+
+// void insd(vi g[],int v,int u){
+//   g[v].emplace_back(u);
+// }
+
+// void tdfs(vi g[], stack<int>& st,int s,bool visited[]){
+//   visited[s] = true;
+//   for(int v : g[s]){
+
+//     if(visited[v] == false){
+//       cout<<v<<"----"<<endl;
+//       tdfs(g,st,v,visited);
+//     }
+//   }
+  
+//   st.push(s);
+// }
+// vi topodfs(vi g[],int V){
+//   bool visited[V];
+//   vi ans;
+//   stack<int> st;
+//   floop(i,0,V) visited[i] = false;
+//   floop(i,0,V){
+//     if(visited[i] == false){
+//       cout<<i<<"##"<<endl;
+//       tdfs(g,st,i,visited);
+//     }
+//   }
+
+//   while(!st.empty()){
+//     ans.emplace_back(st.top());
+//     st.pop();
+//   }
+//   return ans;
+// }
+
+
+
+void insudw(vector<pair<int,int>> gw[], int v, int u, int w){
+  gw[v].emplace_back(make_pair(u,w));
+  gw[u].emplace_back(make_pair(v,w));
+}
+
+void insdw(vector<pair<int,int>> gw[], int v, int u,int w){
+  gw[v].emplace_back(make_pair(u,w));
+}
+
+void findMin(vector<pair<int,int>> gw[], int s, int& count, vector<bool> minSet, int& mini , int& currMin){
+  
+  for(auto x: gw[s]){
+    if(minSet[x.first] == false && x.second < mini){
+      mini = x.second;
+      currMin = x.first;
+    }
+  }
+}
+
+int minspan(vector<pair<int,int>> gw[], int V){
+  int res = 0 ;
+  int count = 1;
+  int init = 0;
+  vector<bool> minSet(V);
+  floop(i,0,V) minSet[i] = false;
+  minSet[init] = true;
+  while(count < V){
+    int mini = INT_MAX;
+    int currMin = init; 
+    floop(i, 0, V){
+      if(minSet[i] == true){
+        findMin(gw, i , count, minSet, mini, currMin);  
+      }
+    }
+      cout<<"-- "<<mini<<endl;
+      res += mini;
+      minSet[currMin] = true;
+      count++;
+    
+  }
+  return res;
+}
+int main()
+{
+    #ifndef ONLINE_JUDGE  
+        freopen("input.txt", "r", stdin); 
+        freopen("output.txt", "w", stdout); 
+    #endif 
+   
+
+
+    int V;
+    cin>>V;
+
+    vector<pair<int,int>> gw[V];
+    vi g[V];
+
+
+    int enteries;
+    cin>>enteries;
+
+    while(enteries--){
+      int v,u,w;
+      cin>>v>>u>>w;
+      insudw(gw,v,u,w);
+      // insd(g,v,u);
+
+    }        
+
+    // vi res = topodfs(g,V);
+    // floop(i,0,res.size()){
+    //   cout<<res[i]<<" ";
+    // }
+    // cout<<endl;
+    int res = minspan(gw, V);
+    cout<<res<<endl;
+
+   return 0;
+
+
+}
+
