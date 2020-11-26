@@ -1,0 +1,43 @@
+class Solution{
+public:	
+
+	void matchPairs(char nuts[], char bolts[], int n) {
+	    // code here
+	    map<char, int> mp;
+	    mp['!'] = 1;
+	    mp['#'] = 2;
+	    mp['$'] = 3;
+	    mp['%'] = 4;
+	    mp['&'] = 5;
+	    mp['*'] = 6;
+	    mp['@'] = 7;
+	    mp['^'] = 8;
+	    mp['~'] = 9;
+	    map<int ,char> mp1;
+	    mp1[1] = '!';
+	    mp1[2] = '#';
+	    mp1[3] = '$';
+	    mp1[4] = '%';
+	    mp1[5] = '&';
+	    mp1[6] = '*';
+	    mp1[7] = '@';
+	    mp1[8] = '^';
+	    mp1[9] = '~';
+	    for(int i = 0 ; i < n; i++){
+	        nuts[i] = '0' + mp[nuts[i]];
+	        bolts[i] = '0' + mp[bolts[i]];
+	    }
+	    sort(nuts, nuts + n);
+	    sort(bolts, bolts + n);
+	    
+	    for(int i = 0 ; i < n ;i++){
+	        nuts[i] = mp1[nuts[i] - '0'];
+	    }
+	    for(int i = 0 ; i < n ;i++){
+	        bolts[i] = mp1[bolts[i] - '0'];
+	    }
+	    
+	}
+	
+
+};
