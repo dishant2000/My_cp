@@ -1,0 +1,72 @@
+#define floop(i, L, R) for (int i = L; i < R; i++)
+#define feloop(i, L, R) for (int i = L; i <= R; i++)
+#define ffloop(i, L, R) for (int i = L; i > R; i--)
+#define ffeloop(i, L, R) for (int i = L; i >= R; i--)
+#define forEach(i, t) for (auto i = t.begin(); i != t.end(); i++)
+#define ALL(c) (c).begin(), (c).end()
+#define pb push_back
+#define dekh(d) cout << d << endl
+#define dekh2(d) cout << d << " "
+#define dekh3(d) cout << d
+typedef unsigned long long ull;
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vll;
+typedef long double ld;
+
+ll res = 0;
+void merge(long long v[], long long N, long long low, long long mid ,long long high){
+  ll n1 = mid - low + 1;
+  ll n2 = high - mid;
+  
+  vi L(n1), R(n2);
+  //cout<<"hello"<<endl;
+  floop(i,0,n1){
+    L[i] = v[low + i];
+  }
+  floop(i,0,n2){
+    R[i] = v[mid + 1 + i];
+  }
+
+  ll i = 0 ;
+  ll j = 0 ;
+  ll k = low;
+  while(i  < n1 && j < n2){
+    if(L[i] <= R[j]){
+      v[k] = L[i];
+      i++;
+      
+    }
+    else{
+      v[k] = R[j];
+      j++;
+      res += n1- i;
+    }
+    k++;
+  }
+  while(i < n1){
+    v[k] = L[i];
+    i++;
+    k++;
+
+  }
+  while(j < n2){
+    v[k++] = R[j++];
+
+  }
+}
+void mergeSort(long long arr[], long long N, long long low, long long high){
+        if(low >= high) return;
+        long long mid = (low + high - 1)/2;
+        mergeSort(arr, N, low, mid);
+        mergeSort(arr, N, mid + 1 , high);
+        merge(arr,N,low,mid,high);
+}
+long long int inversionCount(long long arr[], long long N)
+{
+    mergeSort(arr, N, 0, N -1);
+    ll  res1 = res;
+    res  = 0 ;
+    return res1;
+}
