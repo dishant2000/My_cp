@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int findExhausted(vector<int>& v){
+        for(int i = v.size() - 1 ; i > 0; i--){
+            if(v[i] > v[i - 1]){
+                return i - 1;
+            }
+        }
+        return -1;
+    }
+    int nextGreat(vector<int>& v, int c){
+        for(int i = v.size() - 1; i > c; i--){
+            if(v[i]  > v[c]){
+                return i;
+            }
+        }
+        return 0;
+    }
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int ex = findExhausted(nums);
+        if(ex == -1){
+            reverse(nums.begin(),nums.end());
+        }
+        else{
+            int ng = nextGreat(nums, ex);
+            swap(nums[ex], nums[ng]);
+            reverse(nums.begin() + ex + 1, nums.end());
+        }
+        
+        
+    }
+};
