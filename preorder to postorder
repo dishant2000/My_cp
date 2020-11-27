@@ -1,0 +1,30 @@
+Node* makeTree(int pre[], int ino[],int low, int high, int& pidx, int n){
+    
+       if(low > high) return NULL;
+       
+       Node* root = newNode(pre[pidx++]);
+       int id;
+       for(int i = low; i <= high; i++){
+           if(ino[i] == root->data){
+               id = i;
+               break;
+           }
+       }
+       root->left = makeTree(pre,ino,low,id - 1,pidx,n);
+       root->right = makeTree(pre,ino,id + 1,high,pidx,n);
+       return root;
+}
+
+Node* constructTree(int pre[], int size) {
+    //code here
+    int n = size;
+    int inorder[n];
+    for(int i = 0 ; i < n;i++){
+        inorder[i] = pre[i];
+    }
+    sort(inorder, inorder + n);
+    int pidx = 0;
+    return makeTree(pre,inorder,0,n -1 ,pidx,size);
+    
+    
+}
