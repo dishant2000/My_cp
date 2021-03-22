@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int b[21];
+
+int solve(int v[], int n ){
+    b[n] = 1;
+    //int res = 0 ;
+    for(int i = n - 1; i >= 0 ; i--){
+        int kjump = v[i];
+        if(kjump == 0){
+            b[i] = INT_MAX;
+            continue;
+        }
+        if(kjump + i >= n - 1){
+            b[i] = 1;
+        }
+        else{
+            int mini = INT_MAX;
+            for(int j = 1; j <= kjump; j++){
+                
+                if(i + j < n){
+                    mini = min(mini,b[i + j]);
+                    //cout<<"idx = "<<i<<"\n";
+                    
+                }
+            }
+            b[i] = mini + 1;
+        }
+    }
+    return b[0];
+}
+
+
+int main(){
+    memset(b,-1,sizeof(b));
+    int n ;
+    cin>>n;
+    int arr[n];
+    for(int i = 0 ; i < n ; i++){
+        cin>>arr[i];
+    }
+    
+    cout<<solve(arr,n)<<endl;
+    //for(int i  = 0 ;  i <= n ; i ++ ) cout<<b[i]<<" ";
+}
