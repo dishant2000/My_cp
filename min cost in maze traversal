@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int b[101][101];
+
+int main(){
+    memset(b,-1,sizeof(b));
+    int n ; 
+    int m; 
+    cin >> n >> m;
+    vector<vector<int>> v(n,vector<int>(m));
+    for(int i = 0 ; i  < n ; i ++){
+        for(int  j = 0 ; j < m ; j++){
+            cin>>v[i][j];
+        }
+    }
+    b[n - 1][m - 1] = v[n - 1][m - 1];
+    for(int i = n - 1 ; i >= 0 ; i--){
+        for(int  j = m - 1 ; j >= 0 ; j--)
+        {
+            if(b[i][j] == -1){
+                int r = INT_MAX;
+                int c = INT_MAX;
+                if(i + 1 <= n - 1){
+                    r = b[i + 1][j];
+                }
+                if(j + 1 <= m - 1){
+                    c = b[i][j + 1];
+                }
+                b[i][j]  = min(r,c) + v[i][j];
+            }
+        }
+    }
+        
+    cout<<b[0][0]<<"\n";
+}
