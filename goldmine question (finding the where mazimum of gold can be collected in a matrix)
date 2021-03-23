@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int b[101][101];
+
+int main(){
+    memset(b,-1,sizeof(b));
+    int n ; 
+    int m; 
+    cin >> n >> m;
+    vector<vector<int>> v(n,vector<int>(m));
+    for(int i = 0 ; i  < n ; i ++){
+        for(int  j = 0 ; j < m ; j++){
+            cin>>v[i][j];
+        }
+    }
+    for(int col = 0 ; col < m ; col++){
+        for(int row = 0 ; row < n ; row++){
+            if(col - 1 >= 0){
+                int a = 0 , ba = 0,c = 0;
+                a = b[row][col - 1];
+                if(row + 1 < n){
+                    ba = b[row + 1][col - 1];
+                }
+                if(row - 1 >= 0)
+                {
+                    c = b[row - 1][col - 1];
+                }
+
+                b[row][col] = max(max(a,ba),c) + v[row][col]; 
+            }
+            else{
+                b[row][col] = v[row][col];
+            }
+        }
+    }
+    int res = INT_MIN;
+    for(int i = 0 ; i < n ; i++){
+        res = max(res,b[i][m - 1]);
+    }
+    cout<<res<<"\n";
+}
