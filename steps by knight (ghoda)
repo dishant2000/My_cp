@@ -1,0 +1,52 @@
+
+class Solution 
+{
+    
+    int row[8] = {-1,1,-1,1,-2,-2,2,2};
+    int col[8] = {-2,-2,2,2,1,-1,-1,1};
+    bool vis[1005][1005];
+    int dis[1005][1005];
+    
+    
+    public:
+    bool is_valid(int row, int col, int n){
+        if(row < 0 || row > n || col < 0 || col > n) return false;
+        else return true;
+    }
+    
+    void bfs(int x, int y,int n){
+        queue<pair<int,int>> q;
+        
+        q.push(make_pair(x,y));
+        vis[y][x] = true;
+        dis[y][x] = 0;
+        while(!q.empty()){
+            
+            int currx = q.front().first;
+            int curry = q.front().second;
+            q.pop();
+            for(int i = 0 ; i < 8 ; i++){
+                int nx = currx + row[i];
+                int ny = curry + col[i];
+                
+                if(is_valid(nx,ny,n)){
+                    if(vis[ny][nx] == false){
+                        vis[ny][nx] = true;
+                        dis[ny][nx] = dis[curry][currx] + 1;
+                        q.push(make_pair(nx,ny));
+                    }
+                }
+            }
+        }
+    
+    }
+    //Function to find out minimum steps Knight needs to reach target position.
+	int minStepToReachTarget(vector<int>&ip,vector<int>&tp,int N)
+	{
+	    // Code here
+	    memset(vis,false,sizeof(vis));
+	    memset(dis,0,sizeof(dis));
+	    bfs(ip[0],ip[1],N);
+	    return dis[tp[1]][tp[0]];
+	}
+};
